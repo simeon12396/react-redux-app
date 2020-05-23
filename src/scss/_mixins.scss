@@ -1,0 +1,50 @@
+@import './variables';
+
+@mixin flex($flex-wrap, $justify-content, $align-items) {
+    flex-wrap: $flex-wrap;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
+
+@mixin cover-background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  @mixin pseudo($width, $height, $display: inline-block, $pos: absolute, $content: "") {
+    width: $width;
+    height: $height;
+    display: $display;
+    position: $pos;
+    content: $content;
+}
+
+@mixin box($width, $height) {
+    width: $width;
+    height: $height;
+  }
+
+@mixin tablet {
+    @media only screen and (min-width: $small-bp) {
+      @content;
+    }
+  }
+  
+  @mixin large {
+    @media only screen and (min-width: $medium-bp) {
+      @content;
+    }
+  }
+  
+  @mixin desktop {
+    @media only screen and (min-width: $large-bp) {
+      @content;
+    }
+  }
+
+  @mixin desktop {
+    @media only screen and (min-width: $large-bp) {
+      @content;
+    }
+  }

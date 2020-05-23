@@ -1,11 +1,12 @@
 import React from 'react';
+import Routing from './components/core/Routing/Routing';
 
 function App() {
   return (
     <div className="App">
-      <h1>React redux app</h1>
+      <Routing />
     </div>
   );
-}
+};
 
 export default App;

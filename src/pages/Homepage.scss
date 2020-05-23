@@ -1,0 +1,14 @@
+@import '../scss/extends';
+
+.Homepage {
+    @extend .flex-column-center;
+
+    &__title {
+        @extend .h1;
+    }
+
+    &__brand-name {
+        text-decoration: underline;
+        font-weight: bold;
+    }
+}
