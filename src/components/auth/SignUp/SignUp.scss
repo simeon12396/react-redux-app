@@ -1,11 +1,19 @@
 @import '../../../scss/extends';
-@import '../../../scss/mixins';
 
-.Login {
+.SignUp {
     @extend .flex-column-center;
 
     &__title {
         @extend .h1;
+    }
+
+    &__fullname {
+        @extend .flex;
+        justify-content: space-between;
+
+        & > * {
+            width: 48%;
+        }
     }
 
     &__form {
@@ -21,25 +29,22 @@
         }
     }
 
+    &__select-label {
+        font-size: 1.5rem;
+    }
+
     &__submit {
         margin-top: 2rem;
         padding: 1rem 0;
         font-size: 1.4rem;
     }
 
-    &__hints {
+    &__have-account {
         margin-top: 2rem;
-        width: 100%;
-        @extend .flex;
-        @include flex(nowrap, space-between, flex-start);
-    }
-
-    &__forgot-pass,
-    &__create-account {
         @extend .h3;
     }
 
-    &__sign-up {
+    &__login{
         color: $silver;
         font-weight: bold;
         text-decoration: underline;

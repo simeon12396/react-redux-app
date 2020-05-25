@@ -32,3 +32,11 @@ img {
 .makeStyles-root-1 {
     margin-top: auto;
 }
+
+.MuiInputBase-input,
+.MuiSelect-select.MuiSelect-select {
+    /*
+        Note: it's not a good practise to use !important; 
+    */
+    font-size: 1.5rem !important;
+}

@@ -3,15 +3,16 @@ import './Login.scss';
 import InputField from '../../common/InputField/InputField';
 import { Icon } from '@material-ui/core';
 import Button from '../../common/Button/Button';
+import '../../../scss/_extends.scss';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-    const [firstName, setFirstName] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({firstName, password, email})
+        console.log({password, email})
     };
 
     return(
@@ -20,11 +21,11 @@ const Login = () => {
 
             <form className="Login__form">
                 <InputField 
-                    label="First name" 
-                    type="text" 
+                    label="Email" 
+                    type="email" 
                     className="Login__input" 
-                    value={firstName}
-                    onChange={e => setFirstName(e.target.value)} 
+                    value={email}
+                    onChange={e => setEmail(e.target.value)} 
                 />
 
                 <InputField 
@@ -35,23 +36,23 @@ const Login = () => {
                     onChange={e => setPassword(e.target.value)}  
                 />
 
-                <InputField 
-                    label="Email" 
-                    type="email" 
-                    className="Login__input" 
-                    value={email}
-                    onChange={e => setEmail(e.target.value)} 
-                />
-
                 <Button
                     className="Login__submit"
-                    label="Submit" 
+                    label="Login" 
                     endIcon={<Icon>send</Icon>}
                     fullWidth={true}
                     type="submit"
                     onClick={handleSubmit}
                 />
             </form>
+
+            <div className="Login__hints">
+                <h3 className="Login__forgot-pass">
+                    <Link to="/">Forgot password?</Link>
+                </h3>
+
+                <h3 className="Login__create-account">Don't have an account? <Link className="Login__sign-up" to="/sign-up">Sign Up</Link></h3>
+            </div>
         </section>
     )
 };

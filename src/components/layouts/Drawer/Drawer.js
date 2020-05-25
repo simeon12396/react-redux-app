@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -82,17 +82,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Drawer = ({children}) => {
-    const classes = useStyles();
-    const theme = useTheme();
-    const [open, setOpen] = useState(false);
+    useEffect(() => {
+    window.addEventListener('click', hideDrawer);
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
+    return () => {
+      window.removeEventListener('click', hideDrawer);
     };
+  }, []);
 
-    const handleDrawerClose = () => {
-        setOpen(false);
+  const hideDrawer = e => {
+    if (e.clientX > 180) {
+      setOpen(false);
     };
+  };
+
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+      setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+      setOpen(false);
+  };
 
   return (
     <div className={classes.root}>
