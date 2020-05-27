@@ -2,11 +2,11 @@ import React from 'react';
 import Routing from './components/core/Routing/Routing';
 
 function App() {
-  return (
+    return(
     <div className="App">
-      <Routing />
+        <Routing />
     </div>
-  );
+    );
 };
 
 export default App;
