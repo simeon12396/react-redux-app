@@ -1,103 +1,120 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './SignUp.scss';
 import InputField from '../../common/InputField/InputField';
-import { FormControl, Icon, InputLabel, Select, MenuItem} from '@material-ui/core';
+import { FormControl, Icon, FormLabel, RadioGroup, Radio, FormControlLabel } from '@material-ui/core';
 import Button from '../../common/Button/Button';
 import { Link } from 'react-router-dom';
+import { useForm } from "react-hook-form";
+import Alert from '@material-ui/lab/Alert';
 
 const SignUp = () => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [type, setType] = useState('');
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        formValidation();
+    const errorMessages = (validationType, payload) => {
+        switch(validationType) {
+            case 'required':
+                return `The field ${payload} is required!`;
+            case 'minLength':
+                return `At least ${payload} characters are required`;
+            case 'maxLength':
+                return `At least ${payload} characters are required`;
+        default:
+            return 'Error';
+        };
     };
 
-    const formValidation = () => {
-        alert('work')
+    const { register, handleSubmit, errors } = useForm();
+
+    const onSubmit = data => {
+        console.log(data)
     };
     
     return(
         <section className="SignUp container">
              <h1 className="SignUp__title">Sign Up</h1>
 
-             <form>
-                <div className="SignUp__fullname">
-                    <InputField 
-                        label="First name" 
-                        type="text" 
-                        className="SignUp__input" 
-                        value={firstName}
-                        required
-                        onChange={e => setFirstName(e.target.value)} 
-                    />
+             <form className="SignUp__form">
+                <InputField
+                    required
+                    label="Full name" 
+                    name="fullName" 
+                    type="text" 
+                    className="SignUp__input"
+                    inputRef={register({ required: true})} 
+                />
 
-                    <InputField
-                    required 
-                        label="Last name" 
-                        type="text" 
-                        className="SignUp__input" 
-                        value={lastName}
-                        onChange={e => setLastName(e.target.value)}
-                    />
-                </div>
+                {errors.fullName && <Alert severity="error">{errorMessages('required', 'full name')}</Alert>}
 
                 <InputField
                     required 
-                    label="Email" 
+                    label="Email"
+                    name="email" 
                     type="email" 
-                    className="SignUp__input" 
-                    value={email}
-                    onChange={e => setEmail(e.target.value)} 
+                    className="SignUp__input"
+                    inputRef={register({ required: true })}   
                 />
 
+                {errors.email && <Alert severity="error">{errorMessages('required', 'email')}</Alert>}
+
                 <InputField
-                    required 
+                    required
                     label="Password" 
+                    name="password" 
                     type="password" 
-                    className="SignUp__input" 
-                    value={password}
-                    onChange={e => setPassword(e.target.value)} 
+                    className="SignUp__input"
+                    inputRef={register({ required: true, minLength: 10 })}   
                 />
+
+                {(errors.password && errors.password.type === 'required') && <Alert severity="error">{errorMessages('required', 'password')}</Alert>}
+
+                {(errors.password && errors.password.type === 'minLength') && <Alert severity="error">{errorMessages('minLength', 10)}</Alert>}
 
                 <InputField
-                    required 
+                    required
                     label="Confirm password" 
+                    name="confirmPassword" 
                     type="password" 
-                    className="SignUp__input" 
-                    value={confirmPassword}
-                    onChange={e => setConfirmPassword(e.target.value)} 
+                    className="SignUp__input"
+                    inputRef={register({ required: true, minLength: 10 })}   
                 />
-                
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label" className="SignUp__select-label" required>Type</InputLabel>
 
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={type}
-                        onChange={e => setType(e.target.value)}
-                        className="SignUp__input"
-                        fullWidth
-                    >
-                        <MenuItem value={'administrator'}>Administrator</MenuItem>
-                        <MenuItem value={'employee'}>Employee</MenuItem>
-                    </Select>
+                {(errors.confirmPassword && errors.confirmPassword.type === 'required') && <Alert severity="error">{errorMessages('required', 'confirm password')}</Alert>}
+
+                {(errors.confirmPassword && errors.confirmPassword.type === 'minLength') && <Alert severity="error">{errorMessages('minLength', 10)}</Alert>}
+
+                <FormControl component="fieldset" required>
+                    <FormLabel component="legend">Type position</FormLabel>
+
+                    <RadioGroup aria-label="type" name="type">
+                        <FormControlLabel
+                            label="Administrator" 
+                            control={
+                                <Radio 
+                                    name="positionType" 
+                                    value="administrator" 
+                                    inputRef={register({required: true})} 
+                                />}
+                        /> 
+
+                        <FormControlLabel
+                            label="Employee" 
+                            control={
+                                <Radio 
+                                    name="positionType" 
+                                    value="employee" 
+                                    inputRef={register({required: true})}             
+                                />} 
+                        />
+                    </RadioGroup>
                 </FormControl>
                 
+                {errors.positionType && <Alert severity="error">{errorMessages('required', 'position')}</Alert>}
+
                 <Button
                     className="SignUp__submit"
                     label="Sign Up" 
                     endIcon={<Icon>send</Icon>}
                     fullWidth={true}
                     type="submit"
-                    onClick={handleSubmit}
+                    onClick={handleSubmit(onSubmit)}
                 />
              </form>
 

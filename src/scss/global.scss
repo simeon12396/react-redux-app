@@ -34,7 +34,8 @@ img {
 }
 
 .MuiInputBase-input,
-.MuiSelect-select.MuiSelect-select {
+.MuiFormLabel-root,
+.MuiFormControlLabel-label {
     /*
         Note: it's not a good practise to use !important; 
     */

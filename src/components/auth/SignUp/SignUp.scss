@@ -7,15 +7,6 @@
         @extend .h1;
     }
 
-    &__fullname {
-        @extend .flex;
-        justify-content: space-between;
-
-        & > * {
-            width: 48%;
-        }
-    }
-
     &__form {
         width: 100%;
     }
@@ -27,10 +18,6 @@
         label {
             font-size: 1.5rem;
         }
-    }
-
-    &__select-label {
-        font-size: 1.5rem;
     }
 
     &__submit {

@@ -3,19 +3,15 @@ import TextField from '@material-ui/core/TextField';
 
 const InputField = ({
     className, 
-    variant, 
-    label, 
-    type, 
+    inputRef, 
     fullWidth=true,
     ...rest
 }) => {
     return (
         <TextField
+            inputRef={inputRef}
             className={className}
-            label={label}
-            type={type}
             fullWidth={fullWidth}
-            variant={variant}
             {...rest}
         />
     );
