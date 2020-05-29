@@ -1,0 +1,15 @@
+@import '../../../scss/extends';
+
+.Alert {
+    font-size: 10px;
+
+    &__center {
+        @extend .flex-center;
+    }
+
+    &__absolute {
+        position: absolute;
+        top: 7rem;
+        right: 2rem;
+    }
+}

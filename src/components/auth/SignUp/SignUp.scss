@@ -2,7 +2,7 @@
 
 .SignUp {
     @extend .flex-column-center;
-
+    
     &__title {
         @extend .h1;
     }
@@ -35,5 +35,13 @@
         color: $silver;
         font-weight: bold;
         text-decoration: underline;
+    }
+
+    &__checkbox {
+        margin-bottom: 1rem;
+
+        &__label {
+            margin: 1rem 0;
+        }
     }
 }

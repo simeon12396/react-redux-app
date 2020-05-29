@@ -9,6 +9,7 @@ body {
 .App {
     min-height: 100vh;
     @extend .flex-column;
+    position: relative;
 }
 
 .container {
@@ -40,4 +41,8 @@ img {
         Note: it's not a good practise to use !important; 
     */
     font-size: 1.5rem !important;
+}
+
+main {
+    margin-top: 5rem;
 }
