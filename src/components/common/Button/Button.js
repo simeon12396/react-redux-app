@@ -9,19 +9,17 @@ const Button = ({
     endIcon, 
     className,
     ...rest
-}) => {
-    return (
-        <ButtonM
-            className={className} 
-            variant={variant} 
-            color={color}
-            startIcon={startIcon}
-            endIcon={endIcon}
-            {...rest}
-        >
-            {label}
-        </ButtonM>
-    );
-};
+}) => (
+    <ButtonM
+        className={className} 
+        variant={variant} 
+        color={color}
+        startIcon={startIcon}
+        endIcon={endIcon}
+        {...rest}
+    >
+        {label}
+    </ButtonM>
+);
 
 export default Button;

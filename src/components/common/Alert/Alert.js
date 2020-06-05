@@ -9,20 +9,16 @@ const Alert = ({
     variant,
     className,
     ...rest
-}) => {
-    return (
-        <div>
-            <AlertM
-                severity={severity}
-                color={color}
-                variant={variant}
-                {...rest}
-                className={`Alert ${className}`}
-            >
-                {text}
-            </AlertM>
-        </div>
-    );
-};
+}) => (
+    <AlertM
+        severity={severity}
+        color={color}
+        variant={variant}
+        {...rest}
+        className={`Alert ${className}`}
+    >
+        {text}
+    </AlertM>
+);
 
 export default Alert;

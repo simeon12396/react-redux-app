@@ -6,15 +6,13 @@ const InputField = ({
     inputRef, 
     fullWidth=true,
     ...rest
-}) => {
-    return (
-        <TextField
-            inputRef={inputRef}
-            className={className}
-            fullWidth={fullWidth}
-            {...rest}
-        />
-    );
-};
+}) => (
+    <TextField
+        inputRef={inputRef}
+        className={className}
+        fullWidth={fullWidth}
+        {...rest}
+    />
+);
 
 export default InputField;
