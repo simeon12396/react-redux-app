@@ -6,11 +6,15 @@ import Button from '../../common/Button/Button';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import Alert from '../../common/Alert/Alert';
+import { useDispatch } from 'react-redux';
+import { loadingSpinner } from '../../../store/actions/signUpActions';
 
 const SignUp = ({history}) => {
     const [errorAlert, setErrorAlert] = useState(false);
     const [successAlert, setSuccessAlert] = useState(false);
 
+    const dispatch = useDispatch();
+    
     const errorMessages = (validationType, payload) => {
         switch(validationType) {
             case 'required':
@@ -37,6 +41,8 @@ const SignUp = ({history}) => {
             console.log('work')
             setErrorAlert(false);
             setSuccessAlert(true);
+
+            dispatch(loadingSpinner('work'));
 
             setTimeout(() => {
                 history.push('/login');
