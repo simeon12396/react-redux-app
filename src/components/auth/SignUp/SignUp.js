@@ -38,11 +38,10 @@ const SignUp = ({history}) => {
 
     const signUpValidation = (pw, confirmPw) => {
         if(pw === confirmPw) {
-            console.log('work')
             setErrorAlert(false);
             setSuccessAlert(true);
 
-            dispatch(loadingSpinner('work'));
+            dispatch(loadingSpinner('registered'));
 
             setTimeout(() => {
                 history.push('/login');
