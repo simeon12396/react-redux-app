@@ -12,7 +12,8 @@ import { loadingSpinner } from '../../../store/actions/signUpActions';
 const SignUp = ({history}) => {
     const [errorAlert, setErrorAlert] = useState(false);
     const [successAlert, setSuccessAlert] = useState(false);
-
+    const [signUpInfo, setSignUpInfo] = useState({});
+    console.log(signUpInfo);
     const dispatch = useDispatch();
     
     const errorMessages = (validationType, payload) => {
@@ -32,15 +33,15 @@ const SignUp = ({history}) => {
 
     const { register, handleSubmit, errors } = useForm();
 
-    const onSubmit = ({password, confirmPassword}) => {
-        signUpValidation(password, confirmPassword)
+    const onSubmit = ({password, confirmPassword, fullName, email, positionType}) => {
+        signUpValidation(password, confirmPassword, fullName, email, positionType);
     };
 
-    const signUpValidation = (pw, confirmPw) => {
-        if(pw === confirmPw) {
+    const signUpValidation = (password, confirmPassword, fullName, email, positionType) => {
+        if(password === confirmPassword) {
             setErrorAlert(false);
             setSuccessAlert(true);
-
+            setSignUpInfo({password, confirmPassword, fullName, email, positionType})
             dispatch(loadingSpinner('registered'));
 
             setTimeout(() => {
