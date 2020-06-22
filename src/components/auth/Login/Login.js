@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.scss';
 import InputField from '../../common/InputField/InputField';
 import { Icon } from '@material-ui/core';
 import Button from '../../common/Button/Button';
 import '../../../scss/_extends.scss';
 import { Link } from 'react-router-dom';
+import firebase from '../../../firebaseConfig/firebase';
 
 const Login = () => {
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await firebase.firestore().collection('administrators').get();
+            console.log(data.docs.map(doc => doc.data()));
+        };
+
+        fetchData();
+    }, []);
+
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log({password, email})
