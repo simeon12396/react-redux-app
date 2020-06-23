@@ -5,24 +5,31 @@ import { Icon } from '@material-ui/core';
 import Button from '../../common/Button/Button';
 import '../../../scss/_extends.scss';
 import { Link } from 'react-router-dom';
-import firebase from '../../../firebaseConfig/firebase';
+import { makeHttpRequest } from '../../../services/httpServices';
+import { useForm } from "react-hook-form";
+import Alert from '../../common/Alert/Alert';
 
 const Login = () => {
     useEffect(() => {
-        const fetchData = async () => {
-            const data = await firebase.firestore().collection('administrators').get();
-            console.log(data.docs.map(doc => doc.data()));
-        };
-
-        fetchData();
+        makeHttpRequest('get', 'registered-users').then(res => setRegisteredUsers(res));
     }, []);
 
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [registeredUsers, setRegisteredUsers] = useState([]);
+    const [isLogged, setIsLogged] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log({password, email})
+    const { register, handleSubmit, errors } = useForm();
+
+    console.log(registeredUsers);
+    const onSubmit = () => {
+
+        registeredUsers.forEach(user => {
+            if(user.email === email && user.password === password) {
+                setIsLogged(true);
+                alert('work')
+            };
+        });
     };
 
     return(
@@ -35,16 +42,26 @@ const Login = () => {
                     type="email" 
                     className="Login__input" 
                     value={email}
-                    onChange={e => setEmail(e.target.value)} 
+                    name="email"
+                    onChange={e => setEmail(e.target.value)}
+                    inputRef={register({ required: true, pattern: /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/})}    
                 />
 
+                {(errors.email && errors.email.type === 'required')  && <Alert severity="error" text='The field is required!' />}
+
+                {(errors.email && errors.email.type === 'pattern') && <Alert severity="error" text='The email address must contain the name, @ and the domain.' /> }
+                
                 <InputField 
                     label="Password" 
                     type="password" 
                     className="Login__input" 
                     value={password}
-                    onChange={e => setPassword(e.target.value)}  
+                    name="password"
+                    onChange={e => setPassword(e.target.value)}
+                    inputRef={register({ required: true })}    
                 />
+
+                {(errors.password && errors.password.type === 'required')  && <Alert severity="error" text='The field is required!' />}
 
                 <Button
                     className="Login__submit"
@@ -52,7 +69,7 @@ const Login = () => {
                     endIcon={<Icon>send</Icon>}
                     fullWidth={true}
                     type="submit"
-                    onClick={handleSubmit}
+                    onClick={handleSubmit(onSubmit)}
                 />
             </form>
 
