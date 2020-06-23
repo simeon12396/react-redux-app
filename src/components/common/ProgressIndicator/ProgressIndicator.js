@@ -17,8 +17,8 @@ const ProgressIndicator = ({
   circleIndicator=false, 
   linearIndicator=false, 
   ...rest
-  }) => {
-    const classes = useStyles();
+}) => {
+  const classes = useStyles();
 
     return(
         <div className={classes.root} >
@@ -26,7 +26,7 @@ const ProgressIndicator = ({
 
           { linearIndicator && <LinearProgress {...rest} /> }      
         </div>
-    )
+    );
 };
 
 export default ProgressIndicator;
