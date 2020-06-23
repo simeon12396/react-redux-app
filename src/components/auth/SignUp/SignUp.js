@@ -6,16 +6,14 @@ import Button from '../../common/Button/Button';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import Alert from '../../common/Alert/Alert';
-import { useDispatch } from 'react-redux';
-import { loadingSpinner } from '../../../store/actions/signUpActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { signUpUser, signUpReset } from '../../../store/actions/signUpActions';
 
 const SignUp = ({history}) => {
     const [errorAlert, setErrorAlert] = useState(false);
-    const [successAlert, setSuccessAlert] = useState(false);
-    const [signUpInfo, setSignUpInfo] = useState({});
-    console.log(signUpInfo);
     const dispatch = useDispatch();
-    
+    const isRegistered = useSelector(state => state.signUp.isRegistered);
+
     const errorMessages = (validationType, payload) => {
         switch(validationType) {
             case 'required':
@@ -40,12 +38,11 @@ const SignUp = ({history}) => {
     const signUpValidation = (password, confirmPassword, fullName, email, positionType) => {
         if(password === confirmPassword) {
             setErrorAlert(false);
-            setSuccessAlert(true);
-            setSignUpInfo({password, confirmPassword, fullName, email, positionType})
-            dispatch(loadingSpinner('registered'));
+            dispatch(signUpUser({password, confirmPassword, fullName, email, positionType}))
 
             setTimeout(() => {
                 history.push('/login');
+                dispatch(signUpReset());
             }, 2500);
         } else {
             setErrorAlert(true);
@@ -54,17 +51,6 @@ const SignUp = ({history}) => {
     
     return(
         <section className="SignUp container">
-
-            {
-                successAlert && 
-                    <Alert 
-                        className="Alert__center Alert__absolute" 
-                        severity="success" 
-                        variant="filled" 
-                        text="You are successfully logged into our system!"
-                    />
-            }
-
             {
                 errorAlert && 
                     <Alert 
@@ -72,6 +58,16 @@ const SignUp = ({history}) => {
                         severity="error" 
                         variant="filled" 
                         text="You are not successfully logged into our system!"
+                    />
+            }
+
+            {
+                isRegistered &&
+                    <Alert 
+                        className="Alert__center Alert__absolute" 
+                        severity="success" 
+                        variant="filled" 
+                        text="You are successfully logged into our system!"
                     />
             }
 
@@ -163,7 +159,7 @@ const SignUp = ({history}) => {
                     fullWidth={true}
                     type="submit"
                     onClick={handleSubmit(onSubmit)}
-                    disabled={successAlert ? true : false}
+                    disabled={isRegistered ? true : false}
                 />
              </form>
 

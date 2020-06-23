@@ -1,8 +1,22 @@
-import { LOADING_SPINNER, SIGN_UP_SUCCESS, SIGN_UP_FAILURE } from '../types/signUpTypes';
+import { SIGN_UP_SUCCESS, SIGN_UP_RESET } from '../types/signUpTypes';
+import { makeHttpRequest } from '../../services/httpServices';
 
-export const loadingSpinner = (msg) => {
+export const signUpUserSuccess = (userData) => {
     return {
-        type: LOADING_SPINNER,
-        payload: msg
+        type: SIGN_UP_SUCCESS,
+        payload: userData
+    };
+};
+
+export const signUpReset = () => {
+    return {
+        type: SIGN_UP_RESET
+    };
+};
+
+export const signUpUser = (userData) => {
+    return async dispatch => {
+        makeHttpRequest('post', 'registered-users', userData);
+        dispatch(signUpUserSuccess(userData));
     };
 };

@@ -1,20 +1,24 @@
-import { LOADING_SPINNER, SIGN_UP_SUCCESS, SIGN_UP_FAILURE } from "../types/signUpTypes";
+import { SIGN_UP_SUCCESS, SIGN_UP_RESET } from "../types/signUpTypes";
 
 const initialState = {
-    loadingIndicator: false,
+    userData: [],
+    isRegistered: false,
 };
 
-export const signUpReducer = (state = initialState, {type, payload}) => {
+export const signUpReducer = (state = initialState, { type, payload }) => {
     switch(type) {
-        case LOADING_SPINNER:
+        case SIGN_UP_SUCCESS:
             return {
                 ...state,
-                loadingIndicator: payload
+                userData: payload,
+                isRegistered: true
             };
-        case SIGN_UP_SUCCESS:
-            return {};
-        case SIGN_UP_FAILURE:
-            return {};
+        case SIGN_UP_RESET:
+            return {
+                ...state,
+                userData: [],
+                isRegistered: false
+            };
         default:
             return state
     };
