@@ -57,7 +57,7 @@ const SignUp = ({history}) => {
                         className="Alert__center Alert__absolute" 
                         severity="error" 
                         variant="filled" 
-                        text="You are not successfully logged into our system!"
+                        text="You are not successfully registered into our system!"
                     />
             }
 
@@ -67,7 +67,7 @@ const SignUp = ({history}) => {
                         className="Alert__center Alert__absolute" 
                         severity="success" 
                         variant="filled" 
-                        text="You are successfully logged into our system!"
+                        text="You are successfully registered into our system!"
                     />
             }
 

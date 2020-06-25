@@ -8,8 +8,10 @@ import { Link } from 'react-router-dom';
 import { makeHttpRequest } from '../../../services/httpServices';
 import { useForm } from "react-hook-form";
 import Alert from '../../common/Alert/Alert';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../../store/actions/loginActions';
 
-const Login = () => {
+const Login = ({history}) => {
     useEffect(() => {
         makeHttpRequest('get', 'registered-users').then(res => setRegisteredUsers(res));
     }, []);
@@ -17,23 +19,35 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [registeredUsers, setRegisteredUsers] = useState([]);
-    const [isLogged, setIsLogged] = useState(false);
-
+    const [errorAlert, setErrorAlert] = useState(false);
+    const dispatch = useDispatch();
     const { register, handleSubmit, errors } = useForm();
 
-    console.log(registeredUsers);
     const onSubmit = () => {
 
         registeredUsers.forEach(user => {
-            if(user.email === email && user.password === password) {
-                setIsLogged(true);
-                alert('work')
+            if(user.data.email === email && user.data.password === password) {
+                setErrorAlert(true);
+                dispatch(loginUser({email, password, id: user.id}));
+                setTimeout(() => {
+                    history.push('/');
+                }, 1500);
             };
         });
     };
-
+    
     return(
         <section className="Login container">
+            {
+                errorAlert && 
+                    <Alert 
+                        className="Alert__center Alert__absolute" 
+                        severity="success" 
+                        variant="filled" 
+                        text="You are successfully logged into our system!"
+                    />
+            }
+
             <h1 className="Login__title">Login</h1>
 
             <form className="Login__form">
@@ -70,6 +84,7 @@ const Login = () => {
                     fullWidth={true}
                     type="submit"
                     onClick={handleSubmit(onSubmit)}
+                    disabled={errorAlert ? true : false}
                 />
             </form>
 
