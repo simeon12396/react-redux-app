@@ -7,6 +7,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MailIcon from '@material-ui/icons/Mail';
 import InputIcon from '@material-ui/icons/Input';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import './Drawer.scss';
 import { NavLink } from 'react-router-dom';
 import { 
@@ -21,6 +23,8 @@ import {
     ListItemIcon, 
     ListItemText,
 } from '@material-ui/core/';
+import { useSelector, useDispatch } from 'react-redux';
+import { logOut } from '../../../store/actions/loginActions';
 
 const drawerWidth = 180;
 
@@ -99,6 +103,8 @@ const Drawer = ({children}) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const isLogged = useSelector(state => state.login.isLogged);
+  const dispatch = useDispatch();
 
   const handleDrawerOpen = () => {
       setOpen(true);
@@ -106,6 +112,11 @@ const Drawer = ({children}) => {
 
   const handleDrawerClose = () => {
       setOpen(false);
+  };
+
+  const userLogOut = () => {
+    handleDrawerClose();
+    dispatch(logOut());
   };
 
   return (
@@ -150,38 +161,72 @@ const Drawer = ({children}) => {
 
         <Divider />
 
-        <List>
-          <NavLink exact to="/" className="Drawer__link" onClick={handleDrawerClose} activeClassName="Drawer__link--active">
-            <ListItem button>
-              <ListItemIcon>
-                <MailIcon />
-              </ListItemIcon>
-              
-              <ListItemText primary="Homepage" />
-            </ListItem>
-          </NavLink>
+        {
+          isLogged ? (
+            <List>
+              <NavLink exact to="/" className="Drawer__link" onClick={handleDrawerClose} activeClassName="Drawer__link--active">
+                <ListItem button>
+                  <ListItemIcon>
+                    <MailIcon />
+                  </ListItemIcon>
+                  
+                  <ListItemText primary="Homepage" />
+                </ListItem>
+              </NavLink>
 
-          <NavLink exact to="/sign-up" className="Drawer__link" onClick={handleDrawerClose} activeClassName="Drawer__link--active">
-            <ListItem button>
-              <ListItemIcon>
-                <PersonAddIcon />
-              </ListItemIcon>
-              
-              <ListItemText primary="Sign Up" />
-            </ListItem>
-          </NavLink>
+              <NavLink exact to="/dashboard" className="Drawer__link" onClick={handleDrawerClose} activeClassName="Drawer__link--active">
+                <ListItem button>
+                  <ListItemIcon>
+                    <DashboardIcon />
+                  </ListItemIcon>
+                  
+                  <ListItemText primary="Dashboard" />
+                </ListItem>
+              </NavLink>
 
-          <NavLink exact to="/login" className="Drawer__link" onClick={handleDrawerClose} activeClassName="Drawer__link--active">
-            <ListItem button>
-              <ListItemIcon>
-                <InputIcon />
-              </ListItemIcon>
-              
-              <ListItemText primary="Login" />
-            </ListItem>
-          </NavLink>
-  
-        </List>
+              <NavLink exact to="/sign-up" className="Drawer__link" onClick={userLogOut} activeClassName="Drawer__link--active">
+                <ListItem button>
+                  <ListItemIcon>
+                    <ExitToAppIcon />
+                  </ListItemIcon>
+                  
+                  <ListItemText primary="Logout" />
+                </ListItem>
+              </NavLink>
+            </List>
+          ) :
+          <List>
+              <NavLink exact to="/" className="Drawer__link" onClick={handleDrawerClose} activeClassName="Drawer__link--active">
+                <ListItem button>
+                  <ListItemIcon>
+                    <MailIcon />
+                  </ListItemIcon>
+                  
+                  <ListItemText primary="Homepage" />
+                </ListItem>
+              </NavLink>
+
+              <NavLink exact to="/sign-up" className="Drawer__link" onClick={handleDrawerClose} activeClassName="Drawer__link--active">
+                <ListItem button>
+                  <ListItemIcon>
+                    <PersonAddIcon />
+                  </ListItemIcon>
+                  
+                  <ListItemText primary="Sign Up" />
+                </ListItem>
+              </NavLink>
+
+              <NavLink exact to="/login" className="Drawer__link" onClick={handleDrawerClose} activeClassName="Drawer__link--active">
+                <ListItem button>
+                  <ListItemIcon>
+                    <InputIcon />
+                  </ListItemIcon>
+                  
+                  <ListItemText primary="Login" />
+                </ListItem>
+              </NavLink>
+            </List>
+        }
       </DrawerM>
 
       <section

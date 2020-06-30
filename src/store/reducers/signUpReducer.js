@@ -20,6 +20,6 @@ export const signUpReducer = (state = initialState, { type, payload }) => {
                 isRegistered: false
             };
         default:
-            return state
+            return initialState;
     };
 };
