@@ -1,0 +1,71 @@
+@import '../../scss/variables';
+@import '../../scss/extends';
+@import '../../scss/mixins';
+
+.User-account {
+    @extend .flex-column;
+    min-height: 90vh;
+
+    &__img {
+        width: 20rem;
+        margin: 0 auto;
+        border: 1px solid $silver;
+        @include border-radius(50%);
+        overflow: hidden;
+        position: relative;
+        
+        &::after {
+            @include pseudo(200px, 30px, block, absolute, 'Edit profile picture');
+            bottom: -3rem;
+            text-align: center;
+            background-color: $blue;
+            color: $white;
+            line-height: 30px;
+            transition: all .2s linear;
+            -webkit-transition: all .2s linear;
+            -moz-transition: all .2s linear;
+            -ms-transition: all .2s linear;
+            -o-transition: all .2s linear;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+        
+        &:hover::after{
+            bottom: 0;
+        }
+    }
+
+    &__input {
+        margin-top: 1rem;
+    }
+
+    &__name {
+        @extend .h3;
+    }
+
+    &__information,
+    &__buttons {
+        margin-top: 3rem;
+    }
+
+    &__buttons {
+       @extend .flex;
+       justify-content: flex-end;
+    }
+
+    &__submit {
+        margin-right: 2rem;
+    }
+
+    &__password-container {
+        position: relative;
+
+        svg {
+            position: absolute;
+            bottom: .3rem;
+            right: .5rem;
+        }
+    }
+}
