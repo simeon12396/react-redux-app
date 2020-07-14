@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SignUp.scss';
 import InputField from '../../common/InputField/InputField';
 import { FormControl, Icon, FormLabel, RadioGroup, Radio, FormControlLabel } from '@material-ui/core';
@@ -8,11 +8,17 @@ import { useForm } from "react-hook-form";
 import Alert from '../../common/Alert/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpUser, signUpReset } from '../../../store/actions/signUpActions';
+import { makeHttpRequest } from '../../../services/httpServices';
 
 const SignUp = ({history}) => {
+    useEffect(() => {
+        makeHttpRequest('get', 'registered-users').then(res => setRegisteredUsers(res));
+    }, []);
+
     const [errorAlert, setErrorAlert] = useState(false);
     const dispatch = useDispatch();
     const isRegistered = useSelector(state => state.signUp.isRegistered);
+    const [registeredUsers, setRegisteredUsers] = useState([]);
 
     const errorMessages = (validationType, payload) => {
         switch(validationType) {
@@ -38,12 +44,29 @@ const SignUp = ({history}) => {
     const signUpValidation = (password, confirmPassword, fullName, email, positionType) => {
         if(password === confirmPassword) {
             setErrorAlert(false);
-            dispatch(signUpUser({password, confirmPassword, fullName, email, positionType}))
+            
+            if(registeredUsers.length === 0) {
+                dispatch(signUpUser({password, confirmPassword, fullName, email, positionType}));
 
-            setTimeout(() => {
-                history.push('/login');
-                dispatch(signUpReset());
-            }, 2500);
+                setTimeout(() => {
+                    dispatch(signUpReset());
+                    history.push('/login');
+                }, 2500);
+            };
+
+            registeredUsers.forEach(user => {
+                if(user.email === email) {
+                    alert('This email address is already used!');
+                    return;
+                } else {
+                    dispatch(signUpUser({password, confirmPassword, fullName, email, positionType}));
+
+                    setTimeout(() => {
+                        dispatch(signUpReset());
+                        history.push('/login');
+                    }, 2500);
+                };
+            });
         } else {
             setErrorAlert(true);
         };

@@ -184,7 +184,7 @@ const Drawer = ({children}) => {
                 </ListItem>
               </NavLink>
 
-              <NavLink exact to="/sign-up" className="Drawer__link" onClick={userLogOut} activeClassName="Drawer__link--active">
+              <NavLink exact to="/login" className="Drawer__link" onClick={userLogOut} activeClassName="Drawer__link--active">
                 <ListItem button>
                   <ListItemIcon>
                     <ExitToAppIcon />
