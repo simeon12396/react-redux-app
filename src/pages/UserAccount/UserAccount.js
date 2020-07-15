@@ -40,7 +40,7 @@ const UserAccount = () => {
                 <form>
 
                     <InputField 
-                        label="Full name" 
+                        label="Full Name" 
                         type="text" 
                         className="User-account__input" 
                         value={fullName}
