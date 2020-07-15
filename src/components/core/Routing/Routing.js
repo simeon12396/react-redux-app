@@ -4,8 +4,9 @@ import MainLayout from '../../layouts/MainLayout/MainLayout';
 import LoadingIndicator from '../../common/ProgressIndicator/ProgressIndicator';
 
 const Login = lazy(() => import('../../auth/Login/Login'));
-const Homepage = lazy(() => import('../../../pages/Homepage'));
+const Homepage = lazy(() => import('../../../pages/Homepage/Homepage'));
 const SignUp = lazy(() => import('../../auth/SignUp/SignUp'));
+const UserAccount = lazy(() => import('../../../pages/UserAccount/UserAccount'));
 
 const Routing = () => (
     <Router>
@@ -17,6 +18,8 @@ const Routing = () => (
                     <Route exact path="/login" component={Login} />
 
                     <Route exact path="/sign-up" component={SignUp} />
+
+                    <Route exact path="/user-account" component={UserAccount} />
                 </Switch>
             </Suspense>
         </MainLayout>

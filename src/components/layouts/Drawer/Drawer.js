@@ -7,7 +7,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MailIcon from '@material-ui/icons/Mail';
 import InputIcon from '@material-ui/icons/Input';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import DashboardIcon from '@material-ui/icons/Dashboard';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import './Drawer.scss';
 import { NavLink } from 'react-router-dom';
@@ -174,13 +174,13 @@ const Drawer = ({children}) => {
                 </ListItem>
               </NavLink>
 
-              <NavLink exact to="/dashboard" className="Drawer__link" onClick={handleDrawerClose} activeClassName="Drawer__link--active">
+              <NavLink exact to="/user-account" className="Drawer__link" onClick={handleDrawerClose} activeClassName="Drawer__link--active">
                 <ListItem button>
                   <ListItemIcon>
-                    <DashboardIcon />
+                    <AccountCircleIcon />
                   </ListItemIcon>
                   
-                  <ListItemText primary="Dashboard" />
+                  <ListItemText primary="User account" />
                 </ListItem>
               </NavLink>
 

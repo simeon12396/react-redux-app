@@ -1,6 +1,6 @@
 import firebase from '../firebaseConfig/firebase';
 
-export const makeHttpRequest = async (requestType, collectionName, payload='') => {
+export const makeHttpRequest = async (requestType, collectionName, payload='', currentEmail='') => {
     const database = firebase.firestore();
 
     if(requestType === 'get') {
@@ -21,5 +21,16 @@ export const makeHttpRequest = async (requestType, collectionName, payload='') =
         await database
             .collection(`${collectionName}`)
             .add(payload)
+    };
+
+    if(requestType === 'put') {
+        await database
+        .collection(`${collectionName}`).where("email", "==", currentEmail)
+        .get()
+        .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                doc.ref.update({...payload});
+            });
+        });
     };
 };
